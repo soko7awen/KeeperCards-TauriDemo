@@ -6,8 +6,7 @@ function App() {
   const [statusMsg] = useState("");
 
   async function test() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    await invoke("test_command");
+    await invoke("test_command", { port_name: '/dev/ttyACM0', color: '#F00' });
   }
 
   return (

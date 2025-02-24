@@ -12,3 +12,11 @@
   * Lack of obvious documentation
     * RGB LED is pin 48...
 
+* Created a custom [arduino script](../arduino/SerialRGB/SerialRGB.ino) that allows me to change the built-in RGB NeoPixel LED via serial command.
+
+* Struggled for an hour trying to get my rust script to communicate though serial. Yet to resolve this.
+   * Throwing in the towel for the night.
+     * Tired of banging my head against this, and it's late.
+     * Documentation is very unhelpful.
+     * Will need to clone the examples repo and see what I'm missing...
+
