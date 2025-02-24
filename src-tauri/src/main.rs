@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    mediacards_tauridemo_lib::run()
+    keepercards_tauridemo_lib::run()
 }

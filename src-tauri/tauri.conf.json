@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "mediacards-tauridemo",
+  "productName": "keepercards-tauridemo",
   "version": "0.1.0",
-  "identifier": "xyz.wasworld.mediacards",
+  "identifier": "xyz.wasworld.keepercards",
   "build": {
     "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "mediacards-tauridemo",
+        "title": "KeeperCards Demo",
         "width": 800,
         "height": 600
       }

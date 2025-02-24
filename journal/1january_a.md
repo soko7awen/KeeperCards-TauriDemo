@@ -85,3 +85,19 @@ The goal of this project is to create a proof-of-concept prototype for a novel p
       * Kotlin  
     * Display and arrange elements  
     * Play the relevant piece of audio when selected
+
+# First Meeting – 16 Jan 2025
+
+## Summary
+
+* Introduced the concept to my peers  
+* Received feedback of my ideas presented  
+  * Mostly revolved around specific strategies to achieve the physical technological goal  
+  * Things mentioned: Possible use of NFC and creation of fake slots for mock up, in addition to a few real ones  
+* Overall: Success
+
+## What’s Next?
+
+* Decide on development kit  
+* Begin project initialization, i.e directory skeleton  
+* Get a basic Arduino up and running
