@@ -11,13 +11,7 @@ function App() {
   return (
     <main className="container">
       <h1>Initial Test</h1>
-      <ChromePicker
-        disableAlpha
-        color={"#F00"}
-        onChange={(newColor) => {
-          test(newColor.hex);
-        }} 
-      />
+      <div id="indicator"></div>
     </main>
   );
 }
