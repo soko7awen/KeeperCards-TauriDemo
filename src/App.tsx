@@ -1,13 +1,16 @@
-import { useState } from "react";
-import { invoke } from "@tauri-apps/api/core";
-import { ChromePicker } from "react-color";
+import { listen } from '@tauri-apps/api/event';
+import { useEffect } from 'react';
 import "./App.css";
 
 function App() {
-  async function test(newColor: string) {
-    await invoke("test_command", { port_name: "/dev/ttyACM0", color: newColor });
-  }
-
+  useEffect(() => {
+    const promise = listen('color-changed', (payload) => {
+      console.log('got payload:', payload);
+    });
+    return () => {
+      promise.then(unlisten => unlisten());
+    };
+  }, []);
   return (
     <main className="container">
       <h1>Initial Test</h1>

@@ -6,7 +6,7 @@ use palette::rgb::Rgb;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader, ReadHalf, WriteHalf};
 use tokio::sync::{Mutex, Semaphore};
 use tokio_serial::{SerialPortBuilderExt, SerialStream};
-use tauri::Manager;
+use tauri::{AppHandle,Emitter,Manager};
 
 #[derive(Clone)]
 struct SerialPortState {
@@ -20,7 +20,7 @@ const DEFAULT_TTY: &str = "/dev/ttyACM0";
 const DEFAULT_TTY: &str = "COM1";
 
 #[tauri::command]
-async fn set_led_color(app_handle: tauri::AppHandle, color_code: String) -> Result<(), String> {
+async fn set_led_color(app_handle: AppHandle, color_code: String) -> Result<(), String> {
     let state = app_handle.state::<SerialPortState>();
     let mut guard = state.writer.lock().await;
     
@@ -31,14 +31,14 @@ async fn set_led_color(app_handle: tauri::AppHandle, color_code: String) -> Resu
             .map_err(|e| e.to_string())?;
         port.flush()
             .await
-            .map_err(|e| e.to_string())?;
+            .map_err(|e| e.to_string())?; 
     }
-    
+    app_handle.emit("color-changed",&color_code).unwrap();
     Ok(())
 }
 
 #[tauri::command]
-async fn fade_led(app_handle: tauri::AppHandle, color_code: String) -> Result<(), String> {
+async fn fade_led(app_handle: AppHandle, color_code: String) -> Result<(), String> {
     let state = app_handle.state::<SerialPortState>();
     let _permit = state.fade_semaphore.acquire().await.map_err(|e| e.to_string())?;
     
@@ -72,7 +72,7 @@ async fn fade_led(app_handle: tauri::AppHandle, color_code: String) -> Result<()
     Ok(())
 }
 
-async fn serial_poll(reader: ReadHalf<SerialStream>, app_handle: tauri::AppHandle) -> Result<(), String> {
+async fn serial_poll(reader: ReadHalf<SerialStream>, app_handle: AppHandle) -> Result<(), String> {
     let reader = BufReader::new(reader);
     let mut lines = reader.lines();
 
@@ -109,7 +109,7 @@ async fn serial_poll(reader: ReadHalf<SerialStream>, app_handle: tauri::AppHandl
 }
 
 #[tauri::command]
-async fn serial_setup(app_handle: tauri::AppHandle) -> Result<(), String> {
+async fn serial_setup(app_handle: AppHandle) -> Result<(), String> {
     let tty_path = env::args().nth(1).unwrap_or_else(|| DEFAULT_TTY.into());
     
     let mut port = tokio_serial::new(tty_path, 115200)
@@ -131,7 +131,7 @@ async fn serial_setup(app_handle: tauri::AppHandle) -> Result<(), String> {
 
 #[tauri::command]
 async fn send_serial_data(
-    app_handle: tauri::AppHandle,
+    app_handle: AppHandle,
     data: String,
 ) -> Result<(), String> {
     set_led_color(app_handle, data).await

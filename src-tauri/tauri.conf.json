@@ -12,6 +12,7 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "KeeperCards Demo",
         "width": 800,
         "height": 600
