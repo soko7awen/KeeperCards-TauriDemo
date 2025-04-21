@@ -31,6 +31,7 @@ async fn set_led_color(app_handle: AppHandle, color_code: String) -> Result<(), 
             .map_err(|e| e.to_string())?;
         port.flush().await.map_err(|e| e.to_string())?;
     }
+    app_handle.emit("color-changed", &color_code).unwrap();
     Ok(())
 }
 
@@ -124,7 +125,7 @@ async fn serial_setup(app_handle: AppHandle) -> Result<(), String> {
     let mut guard = state.writer.lock().await;
     *guard = Some(writer);
     drop(guard);
-    app_handle.emit("color-changed", "#010").unwrap();
+
     serial_poll(reader, app_handle).await
 }
 
